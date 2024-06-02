@@ -46,3 +46,28 @@ likeButtons.forEach(button => {
         button.classList.toggle("text-danger");
     });
 });
+
+function updateQuantity(element, increment) {
+    const quantityElement = element.parentElement.querySelector(".quantity");
+    let quantity = parseInt(quantityElement.textContent);
+    if (increment) {
+        quantity++; // équivalent à quantity = quantity + 1;
+    } else {
+        if (quantity > 0) {
+            quantity--;
+        }
+    }
+    quantityElement.textContent = quantity;
+    updateTotalPrice();
+}
+
+function updateTotalPrice() {
+    let totalPrice = 0;
+    const items = document.querySelectorAll(".card-body");
+    items.forEach(item => {
+        const quantity = parseInt(item.querySelector(".quantity").textContent);
+        const price = parseFloat(item.querySelector(".price").textContent); // Assumes the price is stored in a .price element
+        totalPrice += quantity * price;
+    });
+    document.querySelector("#total-price").textContent = totalPrice.toFixed(2); // Assumes there is an element with id total-price to display the total
+}
